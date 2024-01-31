@@ -16,6 +16,23 @@ export function formPlayerNamesStr(runData: RunData): string {
   )).join(' vs. ') || 'N/A';
 }
 
+export function formSSPlayerNamesStr(runData: RunData): string {
+	return runData.teams
+		.filter((team) => team.name !== "Commentators")
+		.map((team, i) => {
+			let players = team.players.map((player) => player.social.twitch ? `@${player.social.twitch}` : player.name).join(', ')
+			if (i !== 0) {
+				if (i % 2 === 0) {
+					players = ' & ' + players
+				} else {
+					players = ' vs. ' + players
+				}
+			}
+			return players
+		})
+		.join('')
+}
+
 /**
  * Takes a run data object and returns an array of all associated Twitch usernames.
  * @param runData Run Data object.

@@ -6,7 +6,7 @@ import { searchForTwitchGame } from './srcom-api';
 import { resetTimer } from './timer';
 import { updateChannelInfo, verifyTwitchDir } from './twitch-api';
 import * as events from './util/events';
-import { bundleConfig, findRunIndexFromId, formPlayerNamesStr, getTwitchChannels, msToTimeStr, processAck, timeStrToMS, to } from './util/helpers'; // eslint-disable-line object-curly-newline, max-len
+import { bundleConfig, findRunIndexFromId, formPlayerNamesStr, formSSPlayerNamesStr, getTwitchChannels, msToTimeStr, processAck, timeStrToMS, to } from './util/helpers'; // eslint-disable-line object-curly-newline, max-len
 import { get } from './util/nodecg';
 import { runDataActiveRun, runDataActiveRunSurrounding, runDataArray, timer, twitchAPIData } from './util/replicants';
 
@@ -66,7 +66,8 @@ async function updateTwitchInformation(runData: RunData): Promise<boolean> {
   const status = bundleConfig().twitch.streamTitle
     .replace(/{{game}}/g, runData.game || '')
     .replace(/{{players}}/g, formPlayerNamesStr(runData))
-    .replace(/{{category}}/g, runData.category || '');
+    .replace(/{{category}}/g, runData.category || '')
+	.replace(/{{ssplayers}}/g, formSSPlayerNamesStr(runData));
 
   // Attempts to find the correct Twitch game directory.
   let { gameTwitch } = runData;

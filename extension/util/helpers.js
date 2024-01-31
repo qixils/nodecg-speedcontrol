@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTwitterUserFromURL = exports.getTwitchUserFromURL = exports.checkGameAgainstIgnoreList = exports.randomInt = exports.to = exports.processAck = exports.bundleConfig = exports.findRunIndexFromId = exports.sleep = exports.msToTimeStr = exports.timeStrToMS = exports.padTimeNumber = exports.getTwitchChannels = exports.formPlayerNamesStr = void 0;
+exports.getTwitterUserFromURL = exports.getTwitchUserFromURL = exports.checkGameAgainstIgnoreList = exports.randomInt = exports.to = exports.processAck = exports.bundleConfig = exports.findRunIndexFromId = exports.sleep = exports.msToTimeStr = exports.timeStrToMS = exports.padTimeNumber = exports.getTwitchChannels = exports.formSSPlayerNamesStr = exports.formPlayerNamesStr = void 0;
 const lodash_1 = __importDefault(require("lodash"));
 const nodecg_1 = require("./nodecg");
 const nodecg = (0, nodecg_1.get)();
@@ -24,6 +24,24 @@ function formPlayerNamesStr(runData) {
     return runData.teams.map((team) => (team.players.map((player) => player.name).join(', '))).join(' vs. ') || 'N/A';
 }
 exports.formPlayerNamesStr = formPlayerNamesStr;
+function formSSPlayerNamesStr(runData) {
+    return runData.teams
+        .filter((team) => team.name !== "Commentators")
+        .map((team, i) => {
+        let players = team.players.map((player) => player.social.twitch ? `@${player.social.twitch}` : player.name).join(', ');
+        if (i !== 0) {
+            if (i % 2 === 0) {
+                players = ' & ' + players;
+            }
+            else {
+                players = ' vs. ' + players;
+            }
+        }
+        return players;
+    })
+        .join('');
+}
+exports.formSSPlayerNamesStr = formSSPlayerNamesStr;
 /**
  * Takes a run data object and returns an array of all associated Twitch usernames.
  * @param runData Run Data object.
