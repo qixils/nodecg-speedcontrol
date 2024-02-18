@@ -2,6 +2,7 @@
 {
   "en": {
     "addNewTeam": "Add New Team",
+    "addNewCommentator": "Add New Commentator",
     "updateTwitch": "Update Twitch information"
   },
   "ja": {
@@ -102,7 +103,34 @@
       />
     </div>
     <div>
-      <!-- Teams -->
+      <h2>Commentators</h2>
+      <!-- TODO: draggable not working -->
+      <draggable
+        v-model="runData.commentators"
+        handle=".CommentatorHandle"
+      >
+        <transition-group name="list">
+          <player
+            v-for="commentator in runData.commentators"
+            :key="commentator.id"
+            :player-data="commentator"
+          />
+        </transition-group>
+      </draggable>
+    </div>
+    <div
+      class="d-flex"
+      :style="{ 'margin-top': '20px' }"
+    >
+      <modify-button
+        class="mr-auto"
+        icon="mdi-account-multiple-plus"
+        :tooltip="$t('addNewCommentator')"
+        @click="addNewCommentator"
+      />
+    </div>
+    <div>
+      <h2>Teams</h2>
       <draggable
         v-model="runData.teams"
         handle=".TeamHandle"
@@ -157,6 +185,7 @@ import { RunData, RunModification, Dialog, Alert } from '@nodecg-speedcontrol/ty
 import clone from 'clone';
 import TextInput from './components/TextInput.vue';
 import Team from './components/Team.vue';
+import Player from './components/Player.vue';
 import ModifyButton from './components/ModifyButton.vue';
 import { getDialog } from '../_misc/helpers';
 import { replicantNS } from '../_misc/replicant_store';
@@ -167,6 +196,7 @@ import { storeModule } from './store';
     Draggable,
     TextInput,
     Team,
+    Player,
     ModifyButton,
   },
 })
@@ -185,6 +215,7 @@ export default class extends Vue {
   set runData(val: RunData) { storeModule.updateRunData(val); }
 
   addNewTeam(): void { storeModule.addNewTeam(); }
+  addNewCommentator(): void { storeModule.addNewCommentator(); }
 
   get customData(): { name: string, key: string, ignoreMarkdown?: boolean }[] {
     const cfg = nodecg.bundleConfig as Configschema;

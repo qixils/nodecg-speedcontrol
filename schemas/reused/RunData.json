@@ -42,6 +42,53 @@
     "relay": {
       "type": "boolean"
     },
+    "commentators": {
+      "$comment": "TODO: reuse",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "pronouns": {
+            "type": "string"
+          },
+          "social": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "twitch": {
+                "type": "string"
+              }
+            }
+          },
+          "customData": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "id",
+          "social",
+          "customData"
+        ]
+      }
+    },
     "teams": {
       "type": "array",
       "default": [],
@@ -132,6 +179,7 @@
     }
   },
   "required": [
+    "commentators",
     "teams",
     "customData",
     "id"

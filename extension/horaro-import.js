@@ -147,6 +147,7 @@ function importSchedule(optsO, dashID) {
                     externalIDsSeen.push(externalID);
                 }
                 const runData = {
+                    commentators: [],
                     teams: [],
                     customData: {},
                     id: (matchingOldRun === null || matchingOldRun === void 0 ? void 0 : matchingOldRun.id) || (0, uuid_1.v4)(),

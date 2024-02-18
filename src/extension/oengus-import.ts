@@ -113,6 +113,7 @@ async function importSchedule(marathonShort: string, useJapanese: boolean): Prom
         .find((oldRun) => oldRun.externalID === line.id.toString());
 
       const runData: RunData = {
+        commentators: [],
         teams: [],
         customData: {},
         id: matchingOldRun?.id ?? uuid(),

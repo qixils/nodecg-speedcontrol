@@ -12,6 +12,7 @@ export interface RunData {
   scheduled?: string;
   scheduledS?: number;
   relay?: boolean;
+  commentators: RunDataCommentator[];
   teams: RunDataTeam[];
   customData: {
     [key: string]: string;
@@ -40,6 +41,8 @@ export interface RunDataPlayer {
     [key: string]: string;
   };
 }
+
+export type RunDataCommentator = Omit<RunDataPlayer, "teamID">
 
 export type RunDataArray = RunData[];
 

@@ -114,6 +114,7 @@ function importSchedule(marathonShort, useJapanese) {
                 const matchingOldRun = replicants_1.runDataArray.value
                     .find((oldRun) => oldRun.externalID === line.id.toString());
                 const runData = {
+                    commentators: [],
                     teams: [],
                     customData: {},
                     id: (_a = matchingOldRun === null || matchingOldRun === void 0 ? void 0 : matchingOldRun.id) !== null && _a !== void 0 ? _a : (0, uuid_1.v4)(),

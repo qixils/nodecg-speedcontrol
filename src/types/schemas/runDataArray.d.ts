@@ -21,6 +21,18 @@ export interface RunData {
 	scheduled?: string;
 	scheduledS?: number;
 	relay?: boolean;
+	commentators: {
+		name: string;
+		id: string;
+		country?: string;
+		pronouns?: string;
+		social: {
+			twitch?: string;
+		};
+		customData: {
+			[k: string]: string;
+		};
+	}[];
 	teams: {
 		name?: string;
 		id: string;

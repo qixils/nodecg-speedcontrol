@@ -142,6 +142,7 @@ async function importSchedule(optsO: ImportOptions, dashID: string): Promise<voi
       }
 
       const runData: RunData = {
+        commentators: [],
         teams: [],
         customData: {},
         id: matchingOldRun?.id || uuid(),

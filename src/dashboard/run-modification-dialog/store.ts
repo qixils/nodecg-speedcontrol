@@ -1,4 +1,4 @@
-import { RunData, RunDataPlayer, RunDataTeam, RunModification } from '@nodecg-speedcontrol/types';
+import { RunData, RunDataPlayer, RunDataTeam, RunModification, RunDataCommentator } from '@nodecg-speedcontrol/types';
 import type { DefaultSetupTime } from '@nodecg-speedcontrol/types/schemas';
 import { ReplicantModule } from '@nodecg-speedcontrol/_misc/replicant_store';
 import clone from 'clone';
@@ -11,6 +11,7 @@ import { msToTimeStr } from '../_misc/helpers';
 Vue.use(Vuex);
 
 const defaultRunData: RunData = {
+  commentators: [],
   teams: [],
   customData: {},
   id: uuid(),
@@ -28,6 +29,13 @@ const defaultPlayer: RunDataPlayer = {
   social: {},
   customData: {},
 };
+
+const defaultCommentator: RunDataCommentator = {
+  id: uuid(),
+  name: '',
+  social: {},
+  customData: {},
+}
 
 @Module({ name: 'OurModule' })
 class OurModule extends VuexModule {
@@ -113,6 +121,14 @@ class OurModule extends VuexModule {
   }
 
   @Mutation
+  addNewCommentator(): void {
+    const commentatorData = clone(defaultCommentator);
+    commentatorData.id = uuid();
+
+    this.runData.commentators.push(commentatorData);
+  }
+
+  @Mutation
   addNewPlayer(teamID: string): void {
     const teamIndex = this.runData.teams.findIndex((team) => teamID === team.id);
     if (teamIndex >= 0) {
@@ -133,11 +149,18 @@ class OurModule extends VuexModule {
 
   @Mutation
   removePlayer({ teamID, id }: { teamID: string, id: string }): void {
-    const teamIndex = this.runData.teams.findIndex((team) => teamID === team.id);
-    const playerIndex = (teamIndex >= 0)
-      ? this.runData.teams[teamIndex].players.findIndex((player) => id === player.id) : -1;
-    if (teamIndex >= 0 && playerIndex >= 0) {
-      this.runData.teams[teamIndex].players.splice(playerIndex, 1);
+    if (teamID) {
+      const teamIndex = this.runData.teams.findIndex((team) => teamID === team.id);
+      const playerIndex = (teamIndex >= 0)
+        ? this.runData.teams[teamIndex].players.findIndex((player) => id === player.id) : -1;
+      if (teamIndex >= 0 && playerIndex >= 0) {
+        this.runData.teams[teamIndex].players.splice(playerIndex, 1);
+      }
+    } else {
+      const playerIndex = this.runData.commentators.findIndex((player) => id === player.id);
+      if (playerIndex >= 0) {
+        this.runData.commentators.splice(playerIndex, 1);
+      }
     }
   }
 
