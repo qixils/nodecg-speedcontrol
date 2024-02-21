@@ -104,7 +104,6 @@
     </div>
     <div>
       <h2>Commentators</h2>
-      <!-- TODO: draggable not working -->
       <draggable
         v-model="runData.commentators"
         handle=".CommentatorHandle"

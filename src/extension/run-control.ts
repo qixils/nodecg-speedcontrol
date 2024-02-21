@@ -174,7 +174,7 @@ async function modifyRun(runData: RunData, prevID?: string, twitch = false): Pro
     // Check all players have names, if not throw an error.
     const allNamesAdded = data.teams.every((team) => (
       team.players.every((player) => !!player.name)
-    ));
+    )) && data.commentators.every((commentator) => !!commentator.name);
     if (!allNamesAdded) {
       throw new Error('Player(s) are missing name(s)');
     }

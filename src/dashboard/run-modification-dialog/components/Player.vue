@@ -19,7 +19,7 @@
 
 <template>
   <div class="Player d-flex align-center">
-    <v-icon class="PlayerHandle">
+    <v-icon :class="[playerData.teamID ? 'PlayerHandle' : 'CommentatorHandle']">
       mdi-drag-vertical
     </v-icon>
     <text-input

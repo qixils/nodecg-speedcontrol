@@ -58,11 +58,16 @@ class OurModule extends VuexModule {
 
   @Mutation
   updatePlayerDataProp(
-    { teamId, id, key, val }: { teamId: string, id: string, key: string, val: unknown },
+    { teamId, id, key, val }: { teamId?: string, id: string, key: string, val: unknown },
   ): void {
-    const teamIndex = this.runData.teams.findIndex((t) => t.id === teamId);
-    const playerIndex = this.runData.teams[teamIndex]?.players.findIndex((p) => p.id === id);
-    if (playerIndex >= 0) Vue.set(this.runData.teams[teamIndex]?.players[playerIndex], key, val);
+    if (teamId) {
+      const teamIndex = this.runData.teams.findIndex((t) => t.id === teamId);
+      const playerIndex = this.runData.teams[teamIndex]?.players.findIndex((p) => p.id === id);
+      if (playerIndex >= 0) Vue.set(this.runData.teams[teamIndex]?.players[playerIndex], key, val);
+    } else {
+      const commentatorIndex = this.runData.commentators.findIndex((c) => c.id === id);
+      if (commentatorIndex >= 0) Vue.set(this.runData.commentators[commentatorIndex], key, val);
+    }
   }
 
   @Mutation

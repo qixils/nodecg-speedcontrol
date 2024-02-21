@@ -13,6 +13,7 @@ export default new VueI18n({
       game: 'Game',
       gameTwitch: 'Game (Twitch)',
       players: 'Player(s)',
+	  commentators: 'Commentator(s)',
       category: 'Category',
       estimate: 'Estimate',
       system: 'System',

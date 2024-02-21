@@ -35,6 +35,10 @@
         <span class="font-weight-bold">{{ $t('players') }}:</span>
         <span>{{ playerStr }}</span>
       </div>
+      <div v-if="commentatorStr">
+        <span class="font-weight-bold">{{ $t('commentators') }}:</span>
+        <span>{{ commentatorStr }}</span>
+      </div>
       <div v-if="runData.category">
         <span class="font-weight-bold">{{ $t('category') }}:</span>
         <span>{{ runData.category }}</span>
@@ -136,6 +140,12 @@ export default class extends Vue {
         player.pronouns ? `${player.name} [${player.pronouns}]` : player.name
       )).join(', ')}`
     )).join(' vs. ');
+  }
+
+  get commentatorStr(): string {
+	return this.runData.commentators
+  .map((commentator) => commentator.pronouns ? `${commentator.name} [${commentator.pronouns}]` : commentator.name)
+  .join(', ');
   }
 
   get runFinishTime(): Timer | undefined {
